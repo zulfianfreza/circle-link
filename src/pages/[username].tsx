@@ -50,99 +50,105 @@ export default function CirclePage({
 
   return (
     <>
-      <NextSeo title={`${profileTitle} - Circle`} />
-      <div
-        className={clsxtm(
-          ' flex min-h-screen w-full flex-col justify-between bg-white bg-cover bg-center',
-          themeClass
-        )}
-        style={themeStyle}
-      >
-        <div className=' relative mx-auto w-full max-w-xl p-4 pb-0 pt-16'>
-          <div className=' flex flex-col items-center justify-center gap-y-4 md:flex-row'>
-            <div className=' flex flex-col items-center justify-center gap-x-8'>
-              <Avatar
-                src={profileData?.profileImage ?? profileData?.image}
-                className=' h-24 w-24'
-              />
-              <div className=' mt-2 flex flex-1 flex-col gap-y-2'>
-                <div className=' text-center'>
-                  <p className=' text-xl font-bold '>
-                    {profileTitle ?? 'Profile Title'}
-                  </p>
-                  <p className=' text-center font-medium'>{bio ?? 'Bio'}</p>
+      {!user ? (
+        <div className=' flex min-h-screen w-full items-center justify-center'>
+          <h1>The page you’re looking for doesn’t exist.</h1>
+        </div>
+      ) : (
+        <div
+          className={clsxtm(
+            ' flex min-h-screen w-full flex-col justify-between bg-white bg-cover bg-center',
+            themeClass
+          )}
+          style={themeStyle}
+        >
+          <NextSeo title={`${profileTitle} - Circle`} />
+          <div className=' relative mx-auto w-full max-w-xl p-4 pb-0 pt-16'>
+            <div className=' flex flex-col items-center justify-center gap-y-4 md:flex-row'>
+              <div className=' flex flex-col items-center justify-center gap-x-8'>
+                <Avatar
+                  src={profileData?.profileImage ?? profileData?.image}
+                  className=' h-24 w-24'
+                />
+                <div className=' mt-2 flex flex-1 flex-col gap-y-2'>
+                  <div className=' text-center'>
+                    <p className=' text-xl font-bold '>
+                      {profileTitle ?? 'Profile Title'}
+                    </p>
+                    <p className=' text-center font-medium'>{bio ?? 'Bio'}</p>
+                  </div>
                 </div>
+              </div>
+            </div>
+            <div
+              className={clsxtm(
+                'mt-4 flex flex-col gap-y-6',
+                socialIconPositionClass
+              )}
+            >
+              <div className='flex flex-wrap items-center justify-center gap-2'>
+                {socialIconsData.map((socialIcon, index) => {
+                  const icon = ICON.find((icon) => {
+                    return icon.label == socialIcon.social
+                  })
+                  return (
+                    socialIcon.active && (
+                      <Link href={socialIcon.url} target='_blank' key={index}>
+                        <Icon icon={icon?.icon ?? HiAtSymbol} size={20} />
+                      </Link>
+                    )
+                  )
+                })}
+              </div>
+
+              <div className='flex flex-col gap-y-3'>
+                {linksData?.map((link) =>
+                  link.type == 'link'
+                    ? link.active && (
+                        <Link
+                          href={link.content ?? ''}
+                          target='_blank'
+                          key={link.id}
+                          className={clsxtm(
+                            ' flex h-12 w-full items-center justify-center px-4'
+                            // {
+                            //   'w-[calc(100%-4px)]':
+                            //     buttonType === BUTTON_TYPE.HARDSHADOW ||
+                            //     buttonType === BUTTON_TYPE.HARDSHADOWROUNDED ||
+                            //     buttonType === BUTTON_TYPE.HARDSHADOWROUNDEDFULL,
+                            // }
+                          )}
+                          style={buttonStyle}
+                        >
+                          <p className=' text-sm'>{link.label}</p>
+                        </Link>
+                      )
+                    : link.type == 'header'
+                    ? link.active && (
+                        <div
+                          className='flex w-full justify-center font-semibold'
+                          key={link.id}
+                        >
+                          <p>{link.label}</p>
+                        </div>
+                      )
+                    : null
+                )}
               </div>
             </div>
           </div>
           <div
             className={clsxtm(
-              'mt-4 flex flex-col gap-y-6',
-              socialIconPositionClass
+              ' flex items-center justify-center  gap-x-1 justify-self-end py-8 font-semibold'
             )}
           >
-            <div className='flex flex-wrap items-center justify-center gap-2'>
-              {socialIconsData.map((socialIcon, index) => {
-                const icon = ICON.find((icon) => {
-                  return icon.label == socialIcon.social
-                })
-                return (
-                  socialIcon.active && (
-                    <Link href={socialIcon.url} target='_blank' key={index}>
-                      <Icon icon={icon?.icon ?? HiAtSymbol} size={20} />
-                    </Link>
-                  )
-                )
-              })}
-            </div>
-
-            <div className='flex flex-col gap-y-3'>
-              {linksData?.map((link) =>
-                link.type == 'link'
-                  ? link.active && (
-                      <Link
-                        href={link.content ?? ''}
-                        target='_blank'
-                        key={link.id}
-                        className={clsxtm(
-                          ' flex h-12 w-full items-center justify-center px-4'
-                          // {
-                          //   'w-[calc(100%-4px)]':
-                          //     buttonType === BUTTON_TYPE.HARDSHADOW ||
-                          //     buttonType === BUTTON_TYPE.HARDSHADOWROUNDED ||
-                          //     buttonType === BUTTON_TYPE.HARDSHADOWROUNDEDFULL,
-                          // }
-                        )}
-                        style={buttonStyle}
-                      >
-                        <p className=' text-sm'>{link.label}</p>
-                      </Link>
-                    )
-                  : link.type == 'header'
-                  ? link.active && (
-                      <div
-                        className='flex w-full justify-center font-semibold'
-                        key={link.id}
-                      >
-                        <p>{link.label}</p>
-                      </div>
-                    )
-                  : null
-              )}
-            </div>
+            <Logo className=' h-6 w-6' />
+            <p className={clsxtm(' text-gray-800', plusJakartaSans.className)}>
+              Circle
+            </p>
           </div>
         </div>
-        <div
-          className={clsxtm(
-            ' flex items-center justify-center  gap-x-1 justify-self-end py-8 font-semibold'
-          )}
-        >
-          <Logo className=' h-6 w-6' />
-          <p className={clsxtm(' text-gray-800', plusJakartaSans.className)}>
-            Circle
-          </p>
-        </div>
-      </div>
+      )}
     </>
   )
 }

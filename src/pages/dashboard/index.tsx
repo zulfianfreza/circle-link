@@ -140,6 +140,15 @@ export default function DashboardPage() {
 export async function getServerSideProps(context: any) {
   const session = await getSession(context)
 
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
   const user = await prisma.user.findUnique({
     where: {
       id: session?.user.id,

@@ -50,7 +50,7 @@ export default function LoginPage() {
 export async function getServerSideProps(context: any) {
   const session = await getSession(context)
 
-  if (session != null) {
+  if (session) {
     return {
       redirect: {
         destination: '/dashboard',

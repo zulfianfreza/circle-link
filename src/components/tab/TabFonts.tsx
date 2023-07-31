@@ -68,6 +68,7 @@ export function TabFonts({ theme, refetch }: TabFontsProps) {
 
   const onBlurColor = async () => {
     handleUpdate()
+    setSelectedFont('')
   }
 
   const handleClose = () => {
